@@ -8,9 +8,10 @@ interface AuthProps {
     password: string;
   }) => Promise<void>;
   children: React.ReactNode;
+  error?: string;
 }
 
-function Auth({ onSubmit, submitLabel, children }: AuthProps) {
+function Auth({ onSubmit, submitLabel, children, error }: AuthProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   return (
@@ -31,12 +32,18 @@ function Auth({ onSubmit, submitLabel, children }: AuthProps) {
         label="Email"
         variant="outlined"
         onChange={(event) => setEmail(event.target.value)}
+        error={!!error}
+        helperText={error}
+        required
       />
       <TextField
+        required
         type="password"
         label="Password"
         variant="outlined"
         onChange={(event) => setPassword(event.target.value)}
+        error={!!error}
+        helperText={error}
       />
       <Button variant="contained" onClick={() => onSubmit({ email, password })}>
         {submitLabel}

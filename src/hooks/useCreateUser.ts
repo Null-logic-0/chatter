@@ -17,8 +17,6 @@ const CREATE_USER = gql`
   }
 `;
 
-const useCreateUser = () => {
+export const useCreateUser = () => {
   return useMutation<User, CreateUserInput>(CREATE_USER);
 };
-
-export { useCreateUser };
