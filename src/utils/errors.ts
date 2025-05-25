@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const extractErrorMessage = (err: any) => {
   const errorMessage = err.graphQLErrors[0]?.extensions?.originalError?.message;
   if (!errorMessage) {

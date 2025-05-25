@@ -17,6 +17,7 @@ export const useLogin = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(request),
+      credentials: "include",
     });
     if (!res.ok) {
       if (res.status === 401) {
