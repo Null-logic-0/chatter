@@ -10,6 +10,8 @@ import {
 import { useState } from "react";
 import { useLogout } from "../../hooks/useLogout";
 import { onLogout } from "../../utils/logout";
+import { snackVar } from "../../constants/snack";
+import { UNKNOWN_ERROR_SNACK_MESSAGE } from "../../constants/errors";
 
 function Settings() {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -49,9 +51,14 @@ function Settings() {
         <MenuItem
           key="logout"
           onClick={async () => {
-            await logout();
-            onLogout();
-            handleCloseUserMenu();
+            try {
+              await logout();
+              onLogout();
+              handleCloseUserMenu();
+            } catch (error) {
+              snackVar(UNKNOWN_ERROR_SNACK_MESSAGE);
+              console.error(error);
+            }
           }}
         >
           <Typography sx={{ textAlign: "center" }}>Logout</Typography>
