@@ -1,10 +1,11 @@
 import { ThemeProvider } from "@emotion/react";
-import { Container, createTheme, CssBaseline } from "@mui/material";
+import { createTheme, CssBaseline } from "@mui/material";
 import { RouterProvider } from "react-router-dom";
 import router from "./components/Routes";
 import { ApolloProvider } from "@apollo/client";
 import client from "./constants/apollo-client";
 import Guard from "./components/auth/Guard";
+import Header from "./components/header/Header";
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -16,11 +17,12 @@ function App() {
     <ApolloProvider client={client}>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <Container>
+        <Header />
+        <main className="container">
           <Guard>
             <RouterProvider router={router} />
           </Guard>
-        </Container>
+        </main>
       </ThemeProvider>
     </ApolloProvider>
   );
