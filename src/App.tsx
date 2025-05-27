@@ -1,6 +1,5 @@
 import { ThemeProvider } from "@emotion/react";
-import { createTheme, CssBaseline } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import { Container, createTheme, CssBaseline, Grid } from "@mui/material";
 
 import { RouterProvider } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client";
@@ -21,18 +20,20 @@ const darkTheme = createTheme({
 
 function App() {
   const { path } = usePath();
+
+  const showChatList = path === "/" || path.includes("chats");
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <Header />
         <Guard>
-          {path === "/" ? (
+          {showChatList ? (
             <Grid container>
-              <Grid>
+              <Grid size={{ md: 2.2 }}>
                 <ChatList />
               </Grid>
-              <Grid>
+              <Grid size={{ md: 9 }}>
                 <Routes />
               </Grid>
             </Grid>
@@ -48,9 +49,9 @@ function App() {
 
 const Routes = () => {
   return (
-    <main className="container">
+    <Container sx={{ height: "90vh" }}>
       <RouterProvider router={router} />
-    </main>
+    </Container>
   );
 };
 
