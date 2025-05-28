@@ -1,6 +1,5 @@
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import classes from "./Header.module.css";
 
 import Branding from "./Branding";
 import Navigation from "./Navigation";
@@ -11,6 +10,7 @@ import MobileBranding from "./mobile/MobileBranding";
 import { useReactiveVar } from "@apollo/client";
 import { authenticatedVar } from "../../constants/authenticated";
 import { Page } from "../../interfaces/page.interface";
+import { Container } from "@mui/system";
 
 const pages: Page[] = [
   {
@@ -37,7 +37,7 @@ function Header() {
 
   return (
     <AppBar position="static">
-      <main className={classes.header}>
+      <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Branding />
 
@@ -46,7 +46,7 @@ function Header() {
           <Navigation pages={pagesPaths} />
           {authenticated && <Settings />}
         </Toolbar>
-      </main>
+      </Container>
     </AppBar>
   );
 }
