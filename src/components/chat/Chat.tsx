@@ -14,23 +14,25 @@ import { useCreateMessage } from "../../hooks/useCreateMessage";
 import { useEffect, useRef, useState } from "react";
 import { useGetMessages } from "../../hooks/useGetMessages";
 import { Box, Grid } from "@mui/system";
+import { useMessageCreated } from "../../hooks/useMessageCreated";
 
 function Chat() {
   const params = useParams();
   const [message, setMessage] = useState("");
   const chatId = params._id!;
+  const [createMessage] = useCreateMessage();
   const { data } = useGetChat({ _id: chatId });
-  const [createMessage] = useCreateMessage(chatId);
   const { data: messages } = useGetMessages({ chatId });
+  useMessageCreated({ chatId });
+
   const divRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
 
   const scrollBottom = () => divRef.current?.scrollIntoView();
 
   useEffect(() => {
-    setMessage("");
     scrollBottom();
-  }, [location, message]);
+  }, [location.pathname, message]);
 
   const handleCreateMessage = async () => {
     await createMessage({
@@ -45,23 +47,38 @@ function Chat() {
     <Stack sx={{ height: "100%", justifyContent: "space-between" }}>
       <h1>{data?.chat?.name}</h1>
       <Box sx={{ maxHeight: "70vh", overflow: "auto" }}>
-        {messages?.messages.map((message) => (
-          <Grid container alignItems="start" marginBottom="1rem">
-            <Avatar src="" sx={{ width: 52, height: 52 }} />
-            <Grid size={6} marginLeft={2}>
-              <Stack spacing={1}>
-                <Paper sx={{ width: "fit-content", padding: "10px" }}>
-                  <Typography sx={{ padding: "0,9rem" }}>
-                    {message.content}
-                  </Typography>
-                </Paper>
-                <Typography variant="caption" sx={{ marginLeft: "0.25rem" }}>
-                  {new Date(message.createdAt).toLocaleTimeString()}
-                </Typography>
-              </Stack>
-            </Grid>
-          </Grid>
-        ))}
+        {messages &&
+          [...messages.messages]
+            .sort(
+              (a, b) =>
+                new Date(a.createdAt).getTime() -
+                new Date(b.createdAt).getTime()
+            )
+            .map((message) => (
+              <Grid
+                container
+                alignItems="start"
+                marginBottom="1rem"
+                key={message._id}
+              >
+                <Avatar src="" sx={{ width: 52, height: 52 }} />
+                <Grid size={6} marginLeft={2}>
+                  <Stack spacing={1}>
+                    <Paper sx={{ width: "fit-content", padding: "10px" }}>
+                      <Typography sx={{ padding: "0,9rem" }}>
+                        {message.content}
+                      </Typography>
+                    </Paper>
+                    <Typography
+                      variant="caption"
+                      sx={{ marginLeft: "0.25rem" }}
+                    >
+                      {new Date(message.createdAt).toLocaleTimeString()}
+                    </Typography>
+                  </Stack>
+                </Grid>
+              </Grid>
+            ))}
         <div ref={divRef}></div>
       </Box>
       <Paper
