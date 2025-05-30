@@ -14,7 +14,6 @@ import { useCreateMessage } from "../../hooks/useCreateMessage";
 import { useEffect, useRef, useState } from "react";
 import { useGetMessages } from "../../hooks/useGetMessages";
 import { Box, Grid } from "@mui/system";
-import { useMessageCreated } from "../../hooks/useMessageCreated";
 
 function Chat() {
   const params = useParams();
@@ -23,7 +22,6 @@ function Chat() {
   const [createMessage] = useCreateMessage();
   const { data } = useGetChat({ _id: chatId });
   const { data: messages } = useGetMessages({ chatId });
-  useMessageCreated({ chatId });
 
   const divRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();

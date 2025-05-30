@@ -19,6 +19,7 @@ export const useCreateChat = () => {
             const newChatRef = cahce.writeFragment({
               data: data?.createChat,
               fragment: ChatFragment,
+              fragmentName: "ChatFragment",
             });
             return [...existingChats, newChatRef];
           },

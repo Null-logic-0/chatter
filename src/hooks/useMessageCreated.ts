@@ -2,15 +2,12 @@ import { useSubscription } from "@apollo/client";
 import { graphql } from "../gql";
 import { SubscriptionMessageCreatedArgs } from "../gql/graphql";
 import { updateMessages } from "../cache/messages";
+import { updateLatestMessage } from "../cache/latestMessage";
 
 const messageCreatedDocument = graphql(`
-  subscription messageCreated($chatId: String!) {
-    messageCreated(chatId: $chatId) {
-      _id
-      content
-      createdAt
-      userId
-      chatId
+  subscription messageCreated($chatIds: [String!]!) {
+    messageCreated(chatIds: $chatIds) {
+      ...MessageFragment
     }
   }
 `);
@@ -23,6 +20,7 @@ export const useMessageCreated = (
     onData: ({ client, data }) => {
       if (data.data) {
         updateMessages(client.cache, data.data.messageCreated);
+        updateLatestMessage(client.cache, data.data.messageCreated);
       }
     },
   });

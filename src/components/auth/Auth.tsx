@@ -10,10 +10,17 @@ interface AuthProps {
     password: string;
   }) => Promise<void>;
   children: React.ReactNode;
+  extraFields?: React.ReactNode[];
   error?: string;
 }
 
-function Auth({ onSubmit, submitLabel, children, error }: AuthProps) {
+function Auth({
+  onSubmit,
+  submitLabel,
+  children,
+  error,
+  extraFields,
+}: AuthProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { data } = useGetMe();
@@ -38,16 +45,19 @@ function Auth({ onSubmit, submitLabel, children, error }: AuthProps) {
       <TextField
         type="email"
         label="Email"
+        value={email}
         variant="outlined"
         onChange={(event) => setEmail(event.target.value)}
         error={!!error}
         helperText={error}
         required
       />
+      {extraFields}
       <TextField
         required
         type="password"
         label="Password"
+        value={password}
         variant="outlined"
         onChange={(event) => setPassword(event.target.value)}
         error={!!error}

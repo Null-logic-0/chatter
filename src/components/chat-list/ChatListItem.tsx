@@ -35,9 +35,9 @@ function ChatListItem({ chat, selected }: ChatListProps) {
                   variant="body2"
                   sx={{ color: "text.primary", display: "inline" }}
                 >
-                  Ali Connors
-                </Typography>
-                {" — I'll be in your neighborhood doing errands this…"}
+                  {chat.latestMessage?.user?.username ?? undefined}
+                </Typography>{" "}
+                {chat.latestMessage?.content ?? undefined}
               </>
             }
           />

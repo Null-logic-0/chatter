@@ -6,12 +6,14 @@ import { useEffect, useState } from "react";
 import ChatListAdd from "./chat-list-add/ChatListAdd";
 import { useGetChats } from "../../hooks/useGetChats";
 import { usePath } from "../../hooks/usePath";
+import { useMessageCreated } from "../../hooks/useMessageCreated";
 
 function ChatList() {
   const [chatListAddVisible, setChatListAddVisible] = useState(false);
   const [selectedChatId, setSelectedChatId] = useState("");
   const { data } = useGetChats();
   const { path } = usePath();
+  useMessageCreated({ chatIds: data?.chats.map((chat) => chat._id) || [] });
 
   useEffect(() => {
     const pathSplit = path.split("chats/");
@@ -36,15 +38,25 @@ function ChatList() {
             overflow: "auto",
           }}
         >
-          {data?.chats
-            .map((chat) => (
-              <ChatListItem
-                chat={chat}
-                key={chat._id}
-                selected={chat._id === selectedChatId}
-              />
-            ))
-            .reverse()}
+          {data?.chats &&
+            [...data.chats]
+              .sort((a, b) => {
+                if (!a.latestMessage) {
+                  return -1;
+                }
+                return (
+                  new Date(a.latestMessage?.createdAt).getTime() -
+                  new Date(b.latestMessage?.createdAt).getTime()
+                );
+              })
+              .map((chat) => (
+                <ChatListItem
+                  chat={chat}
+                  key={chat._id}
+                  selected={chat._id === selectedChatId}
+                />
+              ))
+              .reverse()}
         </List>
       </Stack>
     </>
