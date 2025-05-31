@@ -4,6 +4,7 @@ import { useGetMe } from "../../hooks/useGetMe";
 import { UploadFile } from "@mui/icons-material";
 import { API_URL } from "../../constants/urls";
 import { snackVar } from "../../constants/snack";
+import client from "../../constants/apollo-client";
 
 function Profile() {
   const { data: user } = useGetMe();
@@ -21,6 +22,15 @@ function Profile() {
       if (!res.ok) {
         throw new Error("Image upload failed.");
       }
+      client.cache.modify({
+        id: client.cache.identify({ __typename: "User", id: user?.me._id }),
+        fields: {
+          imageUrl() {
+            return `${user?.me.imageUrl}?t=${Date.now()}`;
+          },
+        },
+      });
+
       snackVar({
         message: "Image uploaded!",
         type: "success",
@@ -40,7 +50,11 @@ function Profile() {
       }}
     >
       <Typography variant="h3">{user?.me.username}</Typography>
-      <Avatar sx={{ width: 256, height: 256 }} src={user?.me.imageUrl} />
+      <Avatar
+        sx={{ width: 256, height: 256 }}
+        src={user?.me.imageUrl}
+        alt={user?.me.username}
+      />
       <Button
         variant="contained"
         size="large"

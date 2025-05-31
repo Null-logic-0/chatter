@@ -25,7 +25,7 @@ function ChatListItem({ chat, selected }: ChatListProps) {
         >
           <ListItemAvatar>
             <Avatar
-              alt="Remy Sharp"
+              alt={chat?.latestMessage?.user.username}
               src={chat?.latestMessage?.user?.imageUrl}
             />
           </ListItemAvatar>

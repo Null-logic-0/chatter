@@ -61,6 +61,7 @@ function Chat() {
               >
                 <Stack spacing={1} alignItems="center" justifyContent="center">
                   <Avatar
+                    alt={message?.user.username}
                     src={message?.user?.imageUrl}
                     sx={{ width: 52, height: 52 }}
                   />

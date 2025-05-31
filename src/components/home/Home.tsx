@@ -1,8 +1,11 @@
+import { Typography } from "@mui/material";
+import { Stack } from "@mui/system";
+
 function Home() {
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
+    <Stack alignItems="center">
+      <Typography variant="h4">Start Chat!</Typography>
+    </Stack>
   );
 }
 
