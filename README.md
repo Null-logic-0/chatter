@@ -1,54 +1,40 @@
-# React + TypeScript + Vite
+Chatter
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Chatter is a real-time messenger application built to deliver a smooth and modern chat experience. It features a robust and scalable architecture using modern web technologies on both the frontend and backend.
 
-Currently, two official plugins are available:
+🖥️ Frontend
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Built with React.js, TypeScript, and Material UI, the frontend provides a responsive and intuitive chat interface. Data is fetched efficiently using Apollo Client and GraphQL.
 
-## Expanding the ESLint configuration
+Tech Stack:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+React.js
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Vite
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+TypeScript
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Material UI (MUI)
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+Apollo Client
+
+GraphQL
+
+Deployment: Vercel
+
+
+📦 Features
+
+Real-time messaging
+
+JWT-based user authentication
+
+Profile image upload
+
+GraphQL API integration
+
+Responsive UI with MUI
+
+Deployed for public use
+
+https://www.youtube.com/watch?v=6DCeQILCDjU
